@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>僕が見たかった青空と古園井寧々</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Yu Gothic", sans-serif;
+  background: linear-gradient(#7ecbff, #e6f6ff);
+  overflow-x: hidden;
+}
+
+/* ===== 雲 ===== */
+.cloud {
+  position: fixed;
+  width: 200px;
+  height: 60px;
+  background: #fff;
+  border-radius: 50px;
+  opacity: 0.8;
+  animation: cloudMove 140s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  animation-duration: var(--cloud-speed, 140s);
+}
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  top: -40px;
+}
+.cloud::before { left: 20px; }
+.cloud::after { right: 20px; }
+
+@keyframes cloudMove {
+  from { left: -250px; }
+  to { left: 110%; }
+}
+
+/* ===== 見出し ===== */
+h1, h2 {
+  text-align: center;
+  color: #0b4da2;
+  position: relative;
+  z-index: 10;
+}
+
+/* ===== メンバー ===== */
+.members {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.year-group {
+  grid-column: 1 / -1;
+  font-size: 20px;
+  font-weight: bold;
+  color: #0b4da2;
+  border-left: 6px solid #7ecbff;
+  padding-left: 10px;
+  margin-top: 25px;
+}
+
+.member {
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.member:hover {
+  transform: scale(1.05);
+}
+
+.details {
+  display: none;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ===== 曲 ===== */
+.songs {
+  max-width: 900px;
+  margin: 30px auto 50px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.song-group {
+  margin-bottom: 25px;
+}
+
+.song-group h2 {
+  border-bottom: 2px solid #7ecbff;
+  padding-bottom: 6px;
+}
+
+.song-list {
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* ===== 推しゾーン ===== */
+#oshi-zone {
+  max-width: 1130px;
+  margin: 30px auto;
+  background: linear-gradient(135deg, #fff3b0, #ffffff);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 10;
+}
+
+#oshi-zone h2 {
+  text-align: center;
+  color: #c99700;
+  margin-bottom: 15px;
+}
+
+.oshi-list {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.oshi-card {
+  background: white;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid gold;
+}
+
+/* ===== メンバー側の★ ===== */
+.member.is-oshi {
+  border: 2px solid gold;
+  background: linear-gradient(135deg, #fff6c1, #ffffff);
+}
+
+.member .star {
+  color: gold;
+  margin-left: 6px;
+}
+
+.birthday-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.month-box {
+  background: rgba(255,255,255,0.95);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.month-box h3 {
+  text-align: center;
+  color: #0b4da2;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #7ecbff;
+  padding-bottom: 4px;
+}
+
+.birthday-member {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.today {
+  color: #e60033;
+  font-weight: bold;
+}
+
+.soon {
+  background: #fff3b0;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.oshi-gold {
+  background: linear-gradient(135deg, #fff1a8, #ffd700);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-weight: bold;
+  color: #8a6a00;
+  box-shadow: 0 0 10px rgba(255,215,0,0.8);
+  animation: goldGlow 2.5s infinite;
+}
+
+@keyframes goldGlow {
+  0% { box-shadow: 0 0 6px rgba(255,215,0,0.5); }
+  50% { box-shadow: 0 0 14px rgba(255,215,0,1); }
+  100% { box-shadow: 0 0 6px rgba(255,215,0,0.5); }
+}
+
+.weather-box {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 999;
+}
+
+/* ☀ 晴れ */
+body.sunny {
+  background: linear-gradient(#7ecbff, #e6f6ff);
+}
+
+/* ☁ 曇り */
+body.cloudy {
+  background: linear-gradient(#b5c7d6, #eef3f7);
+}
+
+/* 🌧 雨 */
+body.rainy {
+  background: linear-gradient(#7a8fa6, #cfd8e3);
+}
+
+/* ❄ 雪 */
+body.snowy {
+  background: linear-gradient(#eaf6ff, #ffffff);
+}
+
+.rain {
+  position: fixed;
+  top: 0;
+  width: 2px;
+  height: 15px;
+  background: rgba(255,255,255,0.6);
+  animation: rainFall 1s linear infinite;
+}
+
+@keyframes rainFall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* ===== 時間帯 ===== */
+body.morning.sunny {
+  background: linear-gradient(#ffd7a8, #a8d8ff);
+}
+
+body.day.sunny {
+  background: linear-gradient(#7ecbff, #e6f6ff);
+}
+
+body.evening.sunny {
+  background: linear-gradient(#ff9a76, #6b9cff);
+}
+
+body.night.sunny {
+  background: linear-gradient(#0b1d3a, #1b3b6f);
+}
+
+/* 曇り */
+body.morning.cloudy {
+  background: linear-gradient(#d9cfc2, #b5c7d6);
+}
+body.day.cloudy {
+  background: linear-gradient(#b5c7d6, #eef3f7);
+}
+body.evening.cloudy {
+  background: linear-gradient(#9c8f86, #6f7f91);
+}
+body.night.cloudy {
+  background: linear-gradient(#2a2f3a, #3b4a5a);
+}
+
+/* 雨 */
+body.rainy {
+  background: linear-gradient(#6f7f91, #cfd8e3);
+}
+
+body.night {
+  background: linear-gradient(180deg, #050b2e, #000);
+  color: #5d05e2;
+  transition: 1s;
+}
+
+.oshi-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.oshi-card img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid gold;
+  box-shadow: 0 0 8px rgba(255,215,0,0.8);
+}
+
+.container {
+  display: flex; /* これだけで横並びに! */
+}
+
+/* =====================
+   📱 スマホ対応
+===================== */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  /* メンバー一覧 */
+  .members {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 10px;
+  }
+
+  .member {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* 推しゾーン */
+  #oshi-zone {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .oshi-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .oshi-card {
+    width: 90%;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .oshi-card img {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* 動画 */
+  .container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  video {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* 誕生日カレンダー */
+  .birthday-calendar {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 10px;
+  }
+
+  .month-box {
+    padding: 10px;
+  }
+
+  /* 天気表示 */
+  .weather-box {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+}
+
+.member-area {
+  display: flex;
+  flex-wrap: wrap;        /* 横に並んで、はみ出たら改行 */
+  gap: 20px;
+  justify-content: center;
+}
+
+.photo-card {
+  width: 150px;
+  text-align: center;
+}
+
+.photo-card img {
+  width: 150px;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  background: #fff;
+}
+
+.oshi img {
+  border: 3px solid gold; /* 推しだけ金枠 */
+  box-shadow: 0 0 15px gold;
+}
+
+/* 写真ラップ */
+.photo-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* リーダー写真の枠 */
+.photo-card.leader img {
+  border: 4px solid #1c3faa; /* ネイビー */
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 3px gold,
+    0 0 18px rgba(255, 215, 0, 0.9);
+}
+
+/* 右下LEADERバッジ */
+.leader-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 8px;
+  background: linear-gradient(135deg, #1c3faa, #0b1d3a);
+  color: gold;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  opacity: 0.95;
+}
+/* 写真ラップ */
+.photo-wrap2 {
+  position: relative;
+  display: inline-block;
+}
+
+/* 副リーダー写真の枠 */
+.photo-card.leader2 img {
+  border: 4px solid #3905c9; /* 紫 */
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 3px silver,
+    0 0 18px rgba(153, 0, 255, 0.205);
+}
+
+/* 右下LEADERバッジ */
+.leader-badge2 {
+  position: absolute;
+  bottom: 14px;
+  right: 8px;
+  background: linear-gradient(135deg, #1c3faa, #0b1d3a);
+  color: gold;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  opacity: 0.95;
+}
+
+#menuBtn {
+  z-index: 9999 !important;
+}
+
+#menuPanel {
+  z-index: 9998 !important;
+}
+
+.weather-box {
+  pointer-events: none;
+}
+
+/* ===== 僕青風UI ===== */
+
+.boku-title{
+  color:#6ec1ff;
+  font-weight:600;
+  letter-spacing:2px;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.track-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.track-item{
+  padding:10px;
+  border-radius:12px;
+  background:rgba(110,193,255,0.15);
+  cursor:pointer;
+  transition:all 0.2s ease;
+  font-weight:500;
+}
+
+.track-item:hover{
+  background:rgba(110,193,255,0.35);
+  transform:scale(1.03);
+}
+
+.track-item.active{
+  background:#6ec1ff;
+  color:white;
+  box-shadow:0 0 10px rgba(110,193,255,0.6);
+}
+
+.boku-btn{
+  background:#6ec1ff;
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+  color:white;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.boku-btn:hover{
+  opacity:0.8;
+}
+
+.volume-area{
+  margin-top:15px;
+}
+
+.clock-box{
+  position: fixed;
+  bottom: 10px;   /* ← 下にする */
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  letter-spacing: 1px;
+}
+
+/* ===== 🎉 当日誕生日特別表示 ===== */
+.birthday-hero {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 25px;
+  text-align: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff1a8, #ffd700);
+  box-shadow: 0 0 25px rgba(255,215,0,0.8);
+  animation: glowHero 2s infinite;
+}
+
+.birthday-hero img {
+  width: 180px;
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: 0 0 20px gold;
+}
+
+.birthday-hero h2 {
+  font-size: 28px;
+  margin: 10px 0;
+  color: #8a6a00;
+}
+
+/* ===== SNSゾーン ===== */
+
+.sns-area{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+  margin:30px 0;
+}
+
+.sns-card{
+  background:rgba(255,255,255,0.95);
+  padding:20px;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  min-width:220px;
+}
+
+.sns-card h3{
+  color:#0b4da2;
+  margin-bottom:10px;
+}
+
+.sns-card a{
+  display:inline-block;
+  margin:6px 0;
+  text-decoration:none;
+  color:#0b4da2;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+.sns-card a:hover{
+  color:#6ec1ff;
+  transform:scale(1.05);
+}
+
+@keyframes glowHero {
+  0% { box-shadow: 0 0 15px rgba(255,215,0,0.6); }
+  50% { box-shadow: 0 0 40px rgba(255,215,0,1); }
+  100% { box-shadow: 0 0 15px rgba(255,215,0,0.6); }
+}
+
+/* ===== SNSアイコン最強カラー ===== */
+
+.sns-btn{
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  border-radius:50%;
+  color:white;
+  text-decoration:none;
+  transition:0.3s;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Instagram：ネオングラデ */
+.insta{
+  background: linear-gradient(135deg,
+    #ff00cc,
+    #ff6a00,
+    #ff00cc
+  );
+  box-shadow:
+    0 0 15px rgba(255,0,204,0.6),
+    0 0 30px rgba(255,106,0,0.4);
+}
+
+/* TikTok：黒×シアン×ピンク発光 */
+.tiktok{
+  background: #0f0f0f;
+  box-shadow:
+    -4px 0 15px #00f2ff,
+     4px 0 15px #ff0050,
+     0 0 25px rgba(0,0,0,0.8);
+}
+
+/* Blog：僕青ネイビー×スカイブルー */
+.blog{
+  background: linear-gradient(135deg,
+    #0b4da2,
+    #6ec1ff
+  );
+  box-shadow:
+    0 0 15px rgba(110,193,255,0.8),
+    0 0 25px rgba(11,77,162,0.6);
+}
+
+/* ホバーでさらに発光 */
+.sns-btn:hover{
+  transform:translateY(-6px) scale(1.1);
+  filter:brightness(1.2);
+}
+
+/* ===== 波紋エフェクト ===== */
+
+.sns-btn{
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple{
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleEffect 0.6s linear;
+  background: rgba(255,255,255,0.6);
+  pointer-events: none;
+}
+
+@keyframes rippleEffect{
+  to{
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ===== クリック時ポンッ拡大 ===== */
+
+.sns-btn{
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+}
+
+/* 押した瞬間 */
+.sns-btn.pop{
+  animation: popEffect 0.25s ease;
+}
+
+@keyframes popEffect{
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ===== ログアウトボタン ===== */
+
+.logout-btn{
+  position: fixed;
+  top: 70px;   /* ← 下にずらした */
+  right: 15px;
+
+  padding: 12px 22px;
+  border: none;
+  border-radius: 30px;
+
+  background: linear-gradient(135deg, #ff4d6d, #c9184a);
+  color: white;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: 0.3s;
+
+  box-shadow:
+    0 6px 18px rgba(201,24,74,0.45),
+    0 0 12px rgba(255,77,109,0.5);
+
+  z-index: 9999;
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- 🎵 BGM -->
+<audio id="bgm">
+  <source src="music/bgm.mp3" type="audio/mp3">
+</audio>
+
+<!-- 🎮 メニューボタン -->
+<button id="menuBtn" style="
+position:fixed;
+top:10px;
+left:10px;
+z-index:1000;
+padding:8px 14px;
+border-radius:20px;
+border:none;
+background:#0b4da2;
+color:white;
+font-weight:bold;
+cursor:pointer;
+">
+☰ MENU
+</button>
+
+<!-- 🎛 メニュー画面 -->
+<div id="menuPanel" style="
+position:fixed;
+top:0;
+transform: translateX(-100%);
+left:0;
+width:260px;
+height:100%;
+background:rgba(0,0,0,0.85);
+color:white;
+padding:20px;
+transition:0.4s;
+z-index:999;
+">
+
+<h3 class="boku-title">🎵 Music Player</h3>
+
+<label>音量</label><br>
+<input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5"><p>
+
+<div id="trackName">No Track</div><p>
+
+<button id="playBtn" class="boku-btn">▶ 再生 / 停止</button>
+<button id="loopBtn" class="boku-btn">🔁 ループOFF</button><p>
+<div style="margin-top:10px;">
+  <input type="range" id="progressBar" value="0" min="0" max="100" step="1" style="width:100%;">
+  <div id="timeDisplay">0:00 / 0:00</div>
+</div>
+<p>
+<div class="track-list" id="trackList">
+</div>
+
+<br>
+
+
+</div>
+
+<div id="weatherBox" class="weather-box">📍 天気取得中…</div>
+<p>
+<div id="clockBox" class="clock-box"></div>
+
+<!-- ☁ 雲 -->
+<div class="cloud" style="top:60px;"></div>
+<div class="cloud" style="top:160px; animation-delay:40s;"></div>
+<div class="cloud" style="top:260px; animation-delay:80s;"></div>
+
+<h1>僕が見たかった青空と古園井寧々</h1>
+<p>
+<div id="birthdayHero" class="birthday-hero" style="display:none;"></div>
+
+<section id="oshi-zone">
+  <h2>⭐ 推しメンゾーン（同い年!!） ⭐</h2>
+<div class="oshi-list">
+  <div class="oshi-card">
+    <img src="①金澤亜美アイコン.jpg" alt="金澤亜美">
+    金澤亜美 ★
+  </div>
+
+  <div class="oshi-card">
+    <img src="①萩原心花アイコン.jpg" alt="萩原心花">
+    萩原心花 ★
+  </div>
+
+  <div class="oshi-card">
+    <img src="①安納蒼衣アイコン.jpg" alt="安納蒼衣">
+    安納蒼衣 ★
+  </div>
+
+  <div class="oshi-card">
+    <img src="古園井寧々２４.jpg" alt="古園井寧々">
+    古園井寧々 ★
+  </div>
+
+      <!-- 動画表示 -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="container">
+      <video controls width="340">
+        <source src="image/showroom,金澤亜美.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+      <video controls width="340">
+        <source src="image/showroom,萩原心花.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+      <video controls width="340">
+        <source src="image/showroom,安納蒼衣.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+      <!-- <video controls width="320">
+        <source src="寧々３３.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video> -->
+     </div>
+    </div>
+</div>
+<br>
+<h2>📱 公式SNSリンク</h2>
+
+<div class="sns-area">
+
+  <!-- 金澤亜美 -->
+  <div class="sns-card">
+    <h3>金澤亜美</h3>
+
+    <div class="sns-icons">
+      <a href="https://www.instagram.com/kanazawa.ami_bokuao?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="sns-btn insta">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://www.tiktok.com/@kanazawaami_bokuao?is_from_webapp=1&sender_device=pc" target="_blank" class="sns-btn tiktok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+
+      <a href="https://bokuao.com/blog/list/1/0/?writer=16" target="_blank" class="sns-btn blog">
+        <i class="fas fa-pen-nib"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- 萩原心花 -->
+  <div class="sns-card">
+    <h3>萩原心花</h3>
+
+    <div class="sns-icons">
+      <a href="https://www.instagram.com/kokoka._bokuao?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="sns-btn insta">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://bokuao.com/blog/list/1/0/?writer=23" target="_blank" class="sns-btn blog">
+        <i class="fas fa-pen-nib"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- 安納蒼衣 -->
+  <div class="sns-card">
+    <h3>安納蒼衣</h3>
+
+    <div class="sns-icons">
+      <a href="https://www.instagram.com/_aoianno_bokuao?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="sns-btn insta">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://bokuao.com/blog/list/1/0/?writer=12" target="_blank" class="sns-btn blog">
+        <i class="fas fa-pen-nib"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- 古園井寧々 -->
+  <div class="sns-card">
+    <h3>古園井寧々</h3>
+
+    <div class="sns-icons">
+      <a href="https://www.instagram.com/nene_kozonoi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="sns-btn insta">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://www.tiktok.com/@nene_kozonoi?is_from_webapp=1&sender_device=pc" target="_blank" class="sns-btn tiktok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+
+</section>
+
+<h2>メンバー（同い年別）</h2>
+<div class="members" id="members"></div>
+
+<h1>🎂 メンバー誕生日カレンダー</h1>
+<div id="birthdayCalendar" class="birthday-calendar"></div>
+
+<!-- 🎵 曲 -->
+<div class="songs">
+  <div class="song-group">
+    <h2>🌤 青空組 担当曲</h2>
+    <div class="song-list">
+      青空について考える / 制服のパラシュート / 思い出尻切れとんぼ / 好きになりなさい / 飛ばなかった紙飛行機<br>
+      卒業まで / スペアのない恋 / 好きすぎてUp and down / 空色の水しぶき<br>
+      恋は倍速 / 青春の旅人よ / 臆病なカラス / キッシュ・ラブ / 青空ディスコティック<br>
+      視線のラブレター / あれはフェアリー
+    </div>
+  </div>
+
+  <div class="song-group">
+    <h2>☁ 雲組 代表曲</h2>
+    <div class="song-list">
+      涙を流そう / 青春の旅人よ / 初めて好きになった人 / 虹を架けよう<br>
+      好きになりなさい / カイロに月 / 卒業まで / 君のための歌<br>
+      微かな希望 / 真っ白に塗り直せ！ / 暗闇の哲学者
+    </div>
+  </div>
+</div>
+
+<h2>⭐ 推しメンゾーン（同い年!!）</h2>
+<div class="member-area">
+
+  <div class="photo-card oshi">
+    <img src="①金澤亜美アイコン.jpg">
+    <p>金澤亜美 ★</p>
+  </div>
+
+  <div class="photo-card oshi">
+    <img src="①萩原心花アイコン.jpg">
+    <p>萩原心花 ★</p>
+  </div>
+
+  <div class="photo-card oshi">
+    <img src="①安納蒼衣アイコン.jpg">
+    <p>安納蒼衣 ★</p>
+  </div>
+
+  <div class="photo-card oshi">
+    <img src="古園井寧々２４.jpg">
+    <p>古園井寧々 ★</p>
+  </div>
+
+</div>
+
+<h2>メンバー</h2>
+<div class="member-area" id="photoMemberArea"></div>
+
+</div>
+
+<button class="logout-btn" onclick="logout()">
+  <i class="fas fa-sign-out-alt"></i>
+  ログアウト
+</button>
+
+<script>
+function logout(){
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userPass");
+  location.href = "login.html";
+}
+</script>
+
+<script>
+const userId = localStorage.getItem("userId");
+
+if(!userId){
+  location.href = "login.html";
+}
+
+const members = [
+ {name:"青木宙帆", birth:"2003/6/13", from:"沖縄県", blood:"A型"},
+ {name:"秋田莉杏", birth:"2007/7/9", from:"兵庫県", blood:"B型"},
+ {name:"安納蒼衣", birth:"2007/1/30", from:"埼玉県", blood:"B型"},
+ {name:"伊藤ゆず", birth:"2001/8/11", from:"千葉県", blood:"AB型"},
+ {name:"今井優希", birth:"2005/8/28", from:"愛知県", blood:"AB型"},
+ {name:"岩本理瑚", birth:"2007/11/25", from:"東京都", blood:"A型"},
+ {name:"金澤亜美", birth:"2007/2/14", from:"神奈川県", blood:"B型"},
+ {name:"木下藍", birth:"2009/8/19", from:"東京都", blood:"O型"},
+ {name:"工藤唯愛", birth:"2009/8/4", from:"北海道", blood:"B型"},
+ {name:"塩釜菜那", birth:"2002/7/7", from:"鹿児島県", blood:"O型"},
+ {name:"杉浦英恋", birth:"2008/6/19", from:"愛知県", blood:"O型"},
+ {name:"須永心海", birth:"2005/4/11", from:"埼玉県", blood:"A型"},
+ {name:"西森杏弥", birth:"2003/7/18", from:"高知県", blood:"A型"},
+ {name:"萩原心花", birth:"2006/6/30", from:"静岡県", blood:"A型"},
+ {name:"長谷川稀未", birth:"2003/3/24", from:"埼玉県", blood:"A型"},
+ {name:"早﨑すずき", birth:"2005/3/13", from:"東京都", blood:"B型"},
+ {name:"宮腰友里亜", birth:"2004/10/24", from:"福井県", blood:"O型"},
+ {name:"八重樫美伊咲", birth:"2010/3/5", from:"宮城県", blood:"不明"},
+ {name:"八木仁愛", birth:"2007/5/1", from:"東京都", blood:"A型"},
+ {name:"柳堀花怜", birth:"2005/7/24", from:"東京都", blood:"B型"},
+ {name:"吉本此那", birth:"2005/12/5", from:"石川県", blood:"A型"},
+ {name:"與那覇陽翔", birth:"2006/07/04", from:"沖縄県", blood:"B型"},
+ {name:"古園井寧々", birth:"2007/03/03", from:"福岡県", blood:"不明"}
+];
+
+// 🔹 早生まれ考慮で年組分け（全員対応）
+const groups = {};
+members.forEach(m => {
+  const [year, month] = m.birth.split("/").map(Number);
+  const groupYear = month <= 3 ? year - 1 : year;
+
+  if (!groups[groupYear]) groups[groupYear] = [];
+  groups[groupYear].push(m);
+});
+
+
+const container = document.getElementById("members");
+container.innerHTML = "";
+
+// 🔹 新しい年組から表示
+Object.keys(groups)
+  .sort((a, b) => b - a)
+  .forEach(year => {
+
+    const yearDiv = document.createElement("div");
+    yearDiv.className = "year-group";
+    yearDiv.textContent = `${year}年組`;
+    container.appendChild(yearDiv);
+
+    groups[year].forEach(m => {
+      const div = document.createElement("div");
+      div.className = "member";
+
+      const age = calculateAge(m.birth);
+
+      div.innerHTML = `
+        <strong>${m.name}（${age}歳）</strong>
+        <div class="details">
+          生年月日：${m.birth}<br>
+          出身：${m.from}<br>
+          血液型：${m.blood}
+        </div>
+      `;
+      div.addEventListener("click", () => {
+        const d = div.querySelector(".details");
+        d.style.display = d.style.display === "block" ? "none" : "block";
+      });
+      container.appendChild(div);
+    });
+});
+
+
+const calendar = document.getElementById("birthdayCalendar");
+
+const months = [
+  "1月","2月","3月","4月","5月","6月",
+  "7月","8月","9月","10月","11月","12月"
+];
+
+// ⭐ 推しメン
+const oshiMembers = ["金澤亜美", "萩原心花" , "安納蒼衣" , "古園井寧々"];
+
+const today = new Date();
+const thisYear = today.getFullYear();
+const todayTime = new Date(thisYear, today.getMonth(), today.getDate()).getTime();
+
+months.forEach((m, index) => {
+  const box = document.createElement("div");
+  box.className = "month-box";
+  box.innerHTML = `<h3>${m}</h3>`;
+
+  members.forEach(member => {
+    const [year, month, day] = member.birth.split("/").map(Number);
+
+    if (month === index + 1) {
+      const birthdayThisYear = new Date(thisYear, month - 1, day).getTime();
+      const diffDays = Math.floor((birthdayThisYear - todayTime) / (1000 * 60 * 60 * 24));
+
+      const div = document.createElement("div");
+      div.className = "birthday-member";
+
+      const isOshi = oshiMembers.includes(member.name);
+
+      // 🎉 今日
+      if (diffDays === 0) {
+        div.classList.add("today");
+        div.textContent = `🎉 ${day}日：${member.name}`;
+      }
+      // 7日以内
+      else if (diffDays > 0 && diffDays <= 7) {
+        div.classList.add("soon");
+        div.textContent = `${day}日：${member.name}（あと${diffDays}日）`;
+      }
+      // 通常
+      else {
+        div.textContent = `${day}日：${member.name}`;
+      }
+
+      // 推しは金色エフェクト
+      if (isOshi) {
+        div.classList.add("oshi-gold");
+        div.textContent = `${div.textContent}`;
+      }
+
+      box.appendChild(div);
+    }
+  });
+
+  calendar.appendChild(box);
+});
+
+const weatherBox = document.getElementById("weatherBox");
+
+function setWeatherStyle(weatherCode) {
+  const timeZone = getTimeZone();
+
+  document.body.className = ""; // 全リセット
+
+  let weatherClass = "sunny";
+  let text = "☀️ 晴れ";
+
+  if ([1,2,3,45,48].includes(weatherCode)) {
+    weatherClass = "cloudy";
+    text = "☁ 曇り";
+  } else if (weatherCode >= 51 && weatherCode <= 67) {
+    weatherClass = "rainy";
+    text = "🌧 雨";
+  } else if (weatherCode >= 71 && weatherCode <= 77) {
+    weatherClass = "snowy";
+    text = "❄ 雪";
+  }
+
+  document.body.classList.add(timeZone, weatherClass);
+  return `${text}（${timeZoneLabel(timeZone)}）`;
+}
+
+function timeZoneLabel(t) {
+  if (t === "morning") return "朝";
+  if (t === "day") return "昼";
+  if (t === "evening") return "夕方";
+  return "夜";
+}
+
+// 位置情報取得
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+      .then(res => res.json())
+      .then(data => {
+        const weatherCode = data.current_weather.weathercode;
+        const temp = data.current_weather.temperature;
+
+        const weatherText = setWeatherStyle(weatherCode);
+        weatherBox.textContent = `📍 ${weatherText} ${temp}℃`;
+      })
+      .catch(() => {
+        weatherBox.textContent = "⚠ 天気取得失敗";
+      });
+
+  }, () => {
+    weatherBox.textContent = "📍 位置情報が拒否されました";
+  });
+} else {
+  weatherBox.textContent = "📍 位置情報未対応";
+}
+
+function adjustClouds(cloudCover, windSpeed) {
+  // 雲の数
+  const cloudCount = Math.floor(cloudCover / 20) + 1;
+
+  // 既存の雲を削除
+  document.querySelectorAll(".cloud").forEach(c => c.remove());
+
+  // 雲の速度（風が強いほど速い）
+  document.documentElement.style.setProperty(
+    "--cloud-speed",
+    `${160 - windSpeed * 5}s`
+  );
+
+  for (let i = 0; i < cloudCount; i++) {
+    const cloud = document.createElement("div");
+    cloud.className = "cloud";
+    cloud.style.top = `${50 + i * 80}px`;
+    cloud.style.animationDelay = `${i * 20}s`;
+    document.body.appendChild(cloud);
+  }
+}
+
+function startRain() {
+  for (let i = 0; i < 80; i++) {
+    const drop = document.createElement("div");
+    drop.className = "rain";
+    drop.style.left = Math.random() * window.innerWidth + "px";
+    drop.style.animationDelay = Math.random() + "s";
+    document.body.appendChild(drop);
+  }
+}
+
+setInterval(() => {
+  location.reload();
+}, 60 * 60 * 1000); // 1時間ごと更新
+
+function getTimeZone() {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 10) return "morning";
+  if (hour >= 10 && hour < 16) return "day";
+  if (hour >= 16 && hour < 18) return "evening";
+  return "night";
+}
+
+const bgm = document.getElementById("bgm");
+const playBtn = document.getElementById("playBtn");
+const trackList = document.getElementById("trackList");
+const trackName = document.getElementById("trackName");
+
+const tracks = [
+ {name:"You_and_Me", file:"music/You_and_Me.mp3"},
+ {name:"あれはフェアリー", file:"music/あれはフェアリー.mp3"},
+ {name:"ぱずる", file:"music/ぱずる.mp3"},
+ {name:"HeyWorld What'sUp", file:"music/HeyWorld What'sUp.mp3"},
+ {name:"この手伸ばして", file:"music/この手伸ばして.mp3"},
+ {name:"本能寺の変", file:"music/本能寺の変.mp3"},
+ {name:"涙をながそう", file:"music/涙をながそう.mp3"},
+ {name:"恋風", file:"music/恋風.mp3"},
+ {name:"YouTubeテーマソング２", file:"music/YouTubeテーマソング２.mp3"}
+];
+
+let currentTrack = 0;
+
+// 曲読み込み
+function loadTrack(i){
+ currentTrack = i;
+ bgm.src = tracks[i].file;
+ trackName.textContent = tracks[i].name;
+
+ document.querySelectorAll(".track-item").forEach((t,index)=>{
+   t.classList.toggle("active", index === i);
+ });
+}
+
+// 曲が終わったら次へ
+bgm.removeEventListener("ended", nextTrack);
+bgm.addEventListener("ended", nextTrack);
+
+function nextTrack(){
+  currentTrack = (currentTrack + 1) % tracks.length;
+  loadTrack(currentTrack);
+  bgm.play();
+}
+
+const loopBtn = document.getElementById("loopBtn");
+let loopMode = false;
+
+loopBtn.onclick = () => {
+
+  loopMode = !loopMode;
+  bgm.loop = loopMode;
+
+  loopBtn.textContent = loopMode ? "🔁 ループON" : "🔁 ループOFF";
+
+};
+
+// 曲リスト作成
+tracks.forEach((t,i)=>{
+ const div = document.createElement("div");
+ div.className = "track-item";
+ div.textContent = t.name;
+
+ div.onclick = ()=>{
+   loadTrack(i);
+   bgm.play();
+ };
+
+ trackList.appendChild(div);
+});
+
+// 再生停止
+playBtn.onclick = ()=>{
+ if(bgm.paused){
+   bgm.play();
+ }else{
+   bgm.pause();
+ }
+};
+
+// 初期
+loadTrack(0);
+
+// ===== メニュー開閉 =====
+const menuBtn = document.getElementById("menuBtn");
+const menuPanel = document.getElementById("menuPanel");
+
+let menuOpen = false;
+
+menuBtn.onclick = () => {
+
+  if(menuOpen){
+    menuPanel.style.transform = "translateX(-100%)";
+  }else{
+    menuPanel.style.transform = "translateX(0)";
+  }
+
+  menuOpen = !menuOpen;
+
+};
+
+const volumeControl = document.getElementById("volumeControl");
+
+bgm.volume = volumeControl.value;
+
+volumeControl.addEventListener("input", () => {
+  bgm.volume = volumeControl.value;
+});
+
+const progressBar = document.getElementById("progressBar");
+const timeDisplay = document.getElementById("timeDisplay");
+
+// 再生時間更新
+bgm.addEventListener("timeupdate", () => {
+
+  const current = bgm.currentTime;
+  const duration = bgm.duration;
+
+  if(duration){
+    progressBar.value = (current / duration) * 100;
+
+    const curMin = Math.floor(current / 60);
+    const curSec = Math.floor(current % 60).toString().padStart(2,"0");
+
+    const durMin = Math.floor(duration / 60);
+    const durSec = Math.floor(duration % 60).toString().padStart(2,"0");
+
+    timeDisplay.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
+  }
+
+});
+
+// バー操作でシーク
+progressBar.addEventListener("input", () => {
+  const duration = bgm.duration;
+  bgm.currentTime = (progressBar.value / 100) * duration;
+});
+
+const clockBox = document.getElementById("clockBox");
+
+function updateClock(){
+
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2,"0");
+  const day = now.getDate().toString().padStart(2,"0");
+
+  const hours = now.getHours().toString().padStart(2,"0");
+  const minutes = now.getMinutes().toString().padStart(2,"0");
+  const seconds = now.getSeconds().toString().padStart(2,"0");
+
+  clockBox.textContent =
+    `${year}/${month}/${day}  ${hours}:${minutes}:${seconds}`;
+}
+
+const birthdayHero = document.getElementById("birthdayHero");
+
+members.forEach(member => {
+  const [year, month, day] = member.birth.split("/").map(Number);
+
+  if (
+    today.getMonth() + 1 === month &&
+    today.getDate() === day
+  ) {
+    birthdayHero.style.display = "block";
+
+    birthdayHero.innerHTML = `
+      <h2>🎉 HAPPY BIRTHDAY 🎉</h2>
+      <h2>${member.name}</h2>
+      <img src="${member.name}.jpg" alt="${member.name}">
+      <p>${month}月${day}日 生まれ</p>
+    `;
+  }
+});
+
+function calculateAge(birth) {
+  const today = new Date();
+  const birthDate = new Date(birth);
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+// ===== 写真メンバー年齢順並び替え =====
+
+const photoArea = document.getElementById("photoMemberArea");
+
+// 生年月日で並び替え（年上→年下）
+const sortedMembers = [...members].sort((a, b) => {
+  return new Date(a.birth) - new Date(b.birth);
+});
+
+sortedMembers.forEach(member => {
+
+  const card = document.createElement("div");
+  card.className = "photo-card";
+
+  // リーダー・副リーダー判定
+  if(member.name === "塩釜菜那"){
+    card.classList.add("leader");
+  }
+
+  if(member.name === "柳堀花怜"){
+    card.classList.add("leader2");
+  }
+
+  // 写真ファイル名そのまま使用
+  card.innerHTML = `
+    <img src="${member.name}.jpg">
+    <p>${member.name}</p>
+  `;
+
+  photoArea.appendChild(card);
+});
+
+// ===== SNSクリック波紋＋ポンッ =====
+document.querySelectorAll(".sns-btn").forEach(button => {
+
+  button.addEventListener("click", function(e){
+
+    /* ===== ポンッ拡大 ===== */
+    this.classList.remove("pop");
+    void this.offsetWidth; // アニメ再発火用
+    this.classList.add("pop");
+
+    /* ===== 波紋 ===== */
+    const circle = document.createElement("span");
+    const diameter = Math.max(this.clientWidth, this.clientHeight);
+    const radius = diameter / 2;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.offsetX - radius}px`;
+    circle.style.top = `${e.offsetY - radius}px`;
+    circle.classList.add("ripple");
+
+    const ripple = this.getElementsByClassName("ripple")[0];
+    if (ripple) ripple.remove();
+
+    this.appendChild(circle);
+  });
+
+});
+
+setInterval(updateClock, 1000);
+updateClock();
+
+</script>
+
+</body>
+</html>

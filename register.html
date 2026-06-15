@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>新規登録</title>
+
+<style>
+body{
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    font-family: sans-serif;
+}
+
+.register-box{
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h1{
+    margin-bottom: 25px;
+    color: #333;
+}
+
+input{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4facfe;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #00c6fb;
+}
+
+#msg{
+    margin-top: 15px;
+    color: red;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h1>新規登録</h1>
+
+    <input type="text" id="id" placeholder="ユーザーID">
+    <input type="password" id="pass" placeholder="パスワード">
+
+    <button onclick="register()">登録</button>
+
+    <div id="msg"></div>
+
+</div>
+
+<script>
+function register(){
+
+  const id = document.getElementById("id").value;
+  const pass = document.getElementById("pass").value;
+
+  if(id === "" || pass === ""){
+    document.getElementById("msg").textContent =
+      "IDとパスワードを入力してください";
+    return;
+  }
+
+  localStorage.setItem("userId", id);
+  localStorage.setItem("userPass", pass);
+
+  alert("登録完了しました");
+
+  location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

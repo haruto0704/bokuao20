@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ログイン</title>
+
+<style>
+body{
+  font-family:"Yu Gothic",sans-serif;
+  background:linear-gradient(#7ecbff,#e6f6ff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+
+.login-box{
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  width:350px;
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+  text-align:center;
+  color:#0b4da2;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  box-sizing:border-box;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#0b4da2;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+#msg{
+  text-align:center;
+  margin-top:10px;
+  color:red;
+}
+
+.register-link{
+  text-align:center;
+  margin-top:15px;
+}
+</style>
+</head>
+<body>
+
+<div class="login-box">
+
+  <h1>ログイン</h1>
+
+  <input type="text" id="id" placeholder="ユーザーID">
+
+  <input type="password" id="pass" placeholder="パスワード">
+
+  <button onclick="login()">ログイン</button>
+
+  <div id="msg"></div>
+
+  <div class="register-link">
+    <a href="register.html">新規登録はこちら</a>
+  </div>
+
+</div>
+
+<script>
+
+function login(){
+
+  const id = document.getElementById("id").value;
+  const pass = document.getElementById("pass").value;
+
+  const saveId = localStorage.getItem("userId");
+  const savePass = localStorage.getItem("userPass");
+
+  if(id === saveId && pass === savePass){
+
+    location.href = "index.html";
+
+  }else{
+
+    document.getElementById("msg").textContent =
+      "IDまたはパスワードが違います";
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
